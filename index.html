@@ -63,7 +63,7 @@
               </tr>
               <tr>
                   <td >
-                      There should be exactly one "@" (the part before "@" is called local-part and the part after that is domain).
+                      There should be exactly one "@" (the part before "@" is called local-part and the part after that is a domain).
                   </td>
                   <td>
                       johndoe@uci.edu
@@ -98,7 +98,7 @@
               </tr>
               <tr>
                   <td >
-                      Domain name can be divided into several parts by ".". The last part consists of 2 to 4 alphabet letters.
+                      The domain name can be divided into several parts by ".". The last part consists of 2 to 4 alphabet letters.
                   </td>
                   <td>
                       johndoe@uci.ed<br>
@@ -111,7 +111,7 @@
               </tr>
               <tr>
                   <td >
-                      All emails should be affiliated with UCI. In other words, the one before last part of the domain should be "uci". Please note that, the domain is case insensitive.
+                      All emails should be affiliated with UCI. In other words, the one before the last part of the domain should be "uci". Please note that the domain is case insensitive.
                   </td>
                   <td>
                       johndoe@UCI.org<br>
@@ -124,16 +124,10 @@
           </tbody>
           </table>
       </p>
-      <h2 class="mt-4">Testing the correctness</h2>
-      <p> This assignment is about testing the ICS-Evo system. You are asked to test using a “black box” or specification-based testing approach.
-        Although the code has been tested by the examples above, it seems there are some unraveld bugs.
-        As a result, you are going to test this part of the code by providing a set of test cases.
-        Each test case consists of two part: the input and the expected output.
-        In this case, the input is a string (for email address) and the output is a boolean value (the correctness of email).
-        For each constrint you have to provide at least two test cases with different expected outputs.
+      <h2 class="mt-4">BlackBox Testing</h2>
+      <p> This assignment is about testing the ICS-Evo system. You are asked to test using a “black box” or specification-based testing approach. Although the code has been tested by the examples above, it seems there are some unraveled bugs. As a result, you are going to test this part of the code by providing a set of test cases. Each test case consists of two elements: the input and the expected output. In this case, the input is a string (for email address), and the output is a boolean value (the correctness of email). For each constraint, you have to provide at least two test cases with different expected outputs.
       </p>
-      <p> To test this functionality, you can use the tool below. Each row represents a test case and you can add more test cases by clicking "Add Row".
-        By clicking on "Run Tests", all test cases will be executed by the implemented code. If the expected output and the actual output of the system matches, then the corresponding row will become green, otherwise it becomes red.
+      <p> To test this functionality, you can use the tool below. Each row represents a test case, and you can add more test cases by clicking "Add Row." By clicking on "Run Tests," all test cases will be executed by the implemented code. If the expected output and the actual output of the system matches, then the corresponding row will become green, otherwise it becomes red.
       </p>
       <p>
         Once you finished testing, click on "<i class="fas fa-download"></i> Test Cases" to download your test suite and don't forget <b> to upload it on Canvas (HW4)</b>.
