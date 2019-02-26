@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+    body {
+      padding-top: 2rem;
+    }
+  </style>
+  <title>Hello, world!</title>
+</head>
+<body>
+
+
+  <main role="main" class="container">
+
+    <div class="starter-template">
+      <h1>ICS-Evo Email Verifier</h1>
+
+
+      <p class="lead">The development team of ICS-Evo implemented a library to check if a string can be an email address or not.
+          An email address satisfies all of the constraints below:
+          <table id="constraints" class="table">
+          <thead>
+              <tr>
+                  <th scope="col" style="width: 50%">Description</th>
+                  <th scope="col" style="width: 25%">Valid Examples</th>
+                  <th scope="col" style="width: 25%">Invalid Examples</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td >
+                      All characters belong to alphabet letters (lower and uppercase), numbers, ".", "@", "-", and "_".
+                  </td>
+                  <td>
+                      johndoe@uci.edu<br>
+                      12.34@uci.edu
+                  </td>
+                  <td>
+                    john?doe@uci.edu
+                  </td>
+              </tr>
+              <tr>
+                  <td >
+                      There should be exactly one "@" (the part before "@" is called local-part and the part after that is domain).
+                  </td>
+                  <td>
+                      johndoe@uci.edu
+                  </td>
+                  <td>
+                    john@doe@uci.edu<br>
+                    john.doe.uci.edu
+                  </td>
+              </tr>
+              <tr>
+                  <td >
+                      The local-part and domain cannot be empty.
+                  </td>
+                  <td>
+                      j@uci.edu
+                  </td>
+                  <td>
+                    @uci.edu<br>
+                    johndoe@
+                  </td>
+              </tr>
+              <tr>
+                  <td >
+                      There should be no two consecutive dots.
+                  </td>
+                  <td>
+                      johndoe@uci.edu
+                  </td>
+                  <td>
+                    john..doe@uci.edu
+                  </td>
+              </tr>
+              <tr>
+                  <td >
+                      Domain name can be divided into several parts by ".". The last part consists of 2 to 4 alphabet letters.
+                  </td>
+                  <td>
+                      johndoe@uci.ed<br>
+                      johndoe@uci.educ
+                  </td>
+                  <td>
+                    johndoe@uci.e<br>
+                    johndoe@uci.education
+                  </td>
+              </tr>
+              <tr>
+                  <td >
+                      All emails should be affiliated with UCI. In other words, the one before last part of the domain should be "uci". Please note that, the domain is case insensitive.
+                  </td>
+                  <td>
+                      johndoe@UCI.org<br>
+                      johndoe@ics.uci.com
+                  </td>
+                  <td>
+                    johndoe@gmail.com
+                  </td>
+              </tr>
+          </tbody>
+          </table>
+      </p>
+      <h2 class="mt-4">Testing the correctness</h2>
+      <p> This assignment is about testing the ICS-Evo system. You are asked to test using a “black box” or specification-based testing approach.
+        Although the code has been tested by the examples above, it seems there are some unraveld bugs.
+        As a result, you are going to test this part of the code by providing a set of test cases.
+        Each test case consists of two part: the input and the expected output.
+        In this case, the input is a string (for email address) and the output is a boolean value (the correctness of email).
+        For each constrint you have to provide at least two test cases with different expected outputs.
+      </p>
+      <p> To test this functionality, you can use the tool below. Each row represents a test case and you can add more test cases by clicking "Add Row".
+        By clicking on "Run Tests", all test cases will be executed by the implemented code. If the expected output and the actual output of the system matches, then the corresponding row will become green, otherwise it becomes red.
+      </p>
+      <p>
+        Once you finished testing, click on "<i class="fas fa-download"></i> Test Cases" to download your test suite and don't forget <b> to upload it on Canvas (HW4)</b>.
+      </p>
+      <p>
+        If you have any question or any problem using the tool, please ask on Piazza or send me an email "nsalehna at uci dot edu", which is a valid email address :)
+      </p>
+
+      <div class="row">
+        <div class="col-md-2">
+          <input type="button" class="btn btn-success btn-lg btn-block" id="" onclick="runTests()" value="Run Tests" />
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-info btn-lg btn-block" type="button"  onclick="generateTCs()">
+          <i class="fas fa-download"> Test Cases</i>
+          </button>
+        </div>
+        <div class="col-md-2">
+          <input type="button" class="btn btn-warning btn-lg btn-block" id="clear_results_btn" onclick="clearRows()" value="Hide Results" />
+        </div>
+      </div>
+      <div class="container row">
+          <table id="myTable" class=" table order-list">
+          <thead>
+              <tr>
+                  <th scope="col" style="width: 33.36%">Test Input</th>
+                  <th scope="col" style="width: 16.66%">Expected Output</th>
+                  <th scope="col" style="width: 16.66%"></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td class="col-md-2">
+                      <input type="text" name="test_input" class="form-control" />
+                  </td>
+                  <td class="col-md-6">
+                    <div class="custom-control custom-switch">
+                      <input name="ev_input" type="checkbox" name="ev" class="custom-control-input" id="customSwitch" checked>
+                      <label class="custom-control-label" for="customSwitch">Correct</label>
+                    </div>
+                  </td>
+                  <td class="col-2"><a class="deleteRow"></a>
+                  </td>
+              </tr>
+          </tbody>
+          <tfoot>
+              <tr>
+                  <td colspan="5" style="text-align: left;">
+                      <input type="button" class="btn btn-primary btn-lg btn-block " id="addrow" value="Add Row" />
+                  </td>
+              </tr>
+              <tr>
+              </tr>
+          </tfoot>
+      </table>
+      </div>
+
+
+
+    </div>
+
+  </main><!-- /.container -->
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="rows.js" type="text/javascript"></script>
+
+
+
+</body>
+</html>
