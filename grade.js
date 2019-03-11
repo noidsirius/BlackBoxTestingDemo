@@ -27,7 +27,7 @@ function readURL(input) {
                       hasBug = true
                     }
                   }
-                  $("#is_text").html("10")
+                  $("#is_text").html("30")
                   $("#has_bug").html(hasBug ? "10" : "0")
                   $("#all_valid").html((oneValid && allValid) ? "10" : "0")
                   alert("Graded")
