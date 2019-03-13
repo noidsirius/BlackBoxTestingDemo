@@ -1,14 +1,21 @@
 function readURL(input) {
+      $("#is_text").html("-")
       $("#all_valid").html("-")
+      $("#all_valid_message").html("")
       $("#has_bug").html("-")
+      $("#has_bug_message").html("")
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                try {
+                try
+                 {
                   allValid = true
+                  allValidCExample = ""
                   hasBug = false
+                  bugCExample = " No bug revealing test case found"
                   oneValid = false
+                  oneValidCExample = " No test case found"
                   for(var s of e.target.result.split("\n")){
                     if(s == "")
                       continue
@@ -20,16 +27,22 @@ function readURL(input) {
                     isCorrect = outputStr == "true"
                     if(correctValidEmail(address) != isCorrect) {
                       allValid = false
+                      allValidCExample = ` The validity of <b>${address}</b> should be <b>${correctValidEmail(address)}</b> but it's <b>${isCorrect}</b>.`
+
                     } else{
                       oneValid = true
+                      oneValidCExample = ""
                     }
                     if(validateEmail(address) != correctValidEmail(address)){
                       hasBug = true
+                      bugCExample = ""
                     }
                   }
                   $("#is_text").html("30")
                   $("#has_bug").html(hasBug ? "10" : "0")
+                  $("#has_bug_message").html(bugCExample)
                   $("#all_valid").html((oneValid && allValid) ? "10" : "0")
+                  $("#all_valid_message").html(allValidCExample +" " + oneValidCExample)
                   alert("Graded")
                 }
                 catch(error){
@@ -50,7 +63,7 @@ function readURL(input) {
     }
 
     function correctValidEmail(sEmail) {
-          var filter = /^([\w-\.]+)@(([\w-]+\.)+)([a-zA-Z]{2,4})$/;
+          var filter = /^([\w-\.]+)@((.?)([\w-]+\.)+)([a-zA-Z]{2,4})$/;
           if (filter.test(sEmail) == false)
             return false
           if (sEmail.toLowerCase().includes(".."))
