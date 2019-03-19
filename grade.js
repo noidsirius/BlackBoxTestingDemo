@@ -4,12 +4,19 @@ function readURL(input) {
       $("#all_valid_message").html("")
       $("#has_bug").html("-")
       $("#has_bug_message").html("")
+      $("#is_comprehensive").html("-");
+      $("#is_comprehensive_message").html("");
+      $("#has_12tcs").html("-");
+      $("#sum").html("-");
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
                 try
                  {
+                   var constraints = [constraint1, constraint2, constraint3, constraint4, constraint5, constraint6];
+                   var comprehensive_flags = [false, false, false, false, false, false]
+                  uniqueEmails = new Set();
                   allValid = true
                   allValidCExample = ""
                   hasBug = false
@@ -24,6 +31,7 @@ function readURL(input) {
                     if (outputStr != "true" && outputStr != "false"){
                       continue
                     }
+                    uniqueEmails.add(address);
                     isCorrect = outputStr == "true"
                     if(correctValidEmail(address) != isCorrect) {
                       allValid = false
@@ -37,12 +45,35 @@ function readURL(input) {
                       hasBug = true
                       bugCExample = ""
                     }
+                    for(var index in constraints){
+                      if(constraints[index](address))
+                        comprehensive_flags[index] = true
+                    }
                   }
+                  is_comprehensive = comprehensive_flags.every(function(e){return e});
+                  comprehensive_message = ""
+                  has_12tcs = uniqueEmails.size >= 12;
+                  if (!is_comprehensive){
+                    comprehensive_message = "No invalid example for the constraint(s): ";
+                    for(index in comprehensive_flags){
+                      m = parseInt(index) + 1;
+                      if (comprehensive_flags[index] == false)
+                        comprehensive_message += `${m} `;
+                      }
+                  }
+
                   $("#is_text").html("30")
+                  $("#has_12tcs").html(has_12tcs ? "40" : "0");
+                  $("#is_comprehensive").html(is_comprehensive ? "10" : "0");
+                  $("#is_comprehensive_message").html(comprehensive_message);
                   $("#has_bug").html(hasBug ? "10" : "0")
                   $("#has_bug_message").html(bugCExample)
                   $("#all_valid").html((oneValid && allValid) ? "10" : "0")
                   $("#all_valid_message").html(allValidCExample +" " + oneValidCExample)
+                  total_sum = 0;
+                  for(s of ["#is_text","#has_12tcs", "#is_comprehensive", "#has_bug","#all_valid"])
+                    total_sum += parseInt($(s).html());
+                  $("#sum").html(total_sum);
                   alert("Graded")
                 }
                 catch(error){
@@ -56,6 +87,34 @@ function readURL(input) {
     $("#imgInp").change(function(){
         readURL(this);
     });
+
+    function constraint1(sEmail){
+      var filter = /[^\w-\.@]/;
+      return filter.test(sEmail)
+    }
+    function constraint2(sEmail){
+      var at_count = (sEmail.match(/@/g) || []).length;
+      return at_count == 0 || at_count > 1
+    }
+    function constraint3(sEmail){
+      var filter1 = /^@((.?)([\w-]+\.)+)([a-zA-Z]{2,4})$/;
+      var filter2 = /^([\w-\.]+)@$/;
+      return filter1.test(sEmail) || filter2.test(sEmail);
+    }
+    function constraint4(sEmail){
+      return sEmail.toLowerCase().includes("..");
+    }
+    function constraint5(sEmail){
+      var lastPart = sEmail.substr(sEmail.lastIndexOf(".")+1);
+      return lastPart.length < 2 || lastPart.length > 4;
+    }
+    function constraint6(sEmail){
+      if (!(sEmail.includes("@") && sEmail.split("@")[1].includes(".")))
+        return false
+      parts = sEmail.toLowerCase().split("@")[1].split(".")
+      return (parts[parts.length-2] != 'uci')
+    }
+
 
     function validateEmail(sEmail) {
           var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
