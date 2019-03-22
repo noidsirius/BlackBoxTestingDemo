@@ -7,6 +7,7 @@ function readURL(input) {
       $("#is_comprehensive").html("-");
       $("#is_comprehensive_message").html("");
       $("#has_12tcs").html("-");
+      $("#has_12tcs_message").html("");
       $("#sum").html("-");
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -52,7 +53,19 @@ function readURL(input) {
                   }
                   is_comprehensive = comprehensive_flags.every(function(e){return e});
                   comprehensive_message = ""
-                  has_12tcs = uniqueEmails.size >= 12;
+                  has_12tcs_score = 0;
+                  if (uniqueEmails.size >= 12){
+                    has_12tcs_score = 40
+                  }
+                  else if (uniqueEmails.size == 11) {
+                    has_12tcs_score = 35
+                  }
+                  else if (uniqueEmails.size == 10) {
+                    has_12tcs_score = 30
+                  }
+                  else if (uniqueEmails.size == 9) {
+                    has_12tcs_score = 25
+                  }
                   if (!is_comprehensive){
                     comprehensive_message = "No invalid example for the constraint(s): ";
                     for(index in comprehensive_flags){
@@ -63,7 +76,9 @@ function readURL(input) {
                   }
 
                   $("#is_text").html("30")
-                  $("#has_12tcs").html(has_12tcs ? "40" : "0");
+                  $("#has_12tcs").html(has_12tcs_score);
+                  if(has_12tcs_score < 40)
+                    $("#has_12tcs_message").html(Array.from(uniqueEmails).join("<br>"));
                   $("#is_comprehensive").html(is_comprehensive ? "10" : "0");
                   $("#is_comprehensive_message").html(comprehensive_message);
                   $("#has_bug").html(hasBug ? "10" : "0")
