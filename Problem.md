@@ -22,13 +22,6 @@ Each test case consists of one string of characters.
 []: # (Define the format of each test case output, usually a multiple choice)
 The output should be either "Valid" (showing the input string is a valid email) or "Invalid".
 
-### Existing Database
-[]: # (If the task under test has a database, you can provide a snapshot of the database here)
-
-The following emails are already registered:
-
-- root@uci.edu
-- admin@uci.edu
 
 ### Examples
 []: # (In the table below provide some examples)

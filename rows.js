@@ -29,10 +29,7 @@ function readOutputValues(outputHTML){
 }
 
 function doesTestPass (inputValues, outputValues) {
-  return (validateEmail(inputValues) == (outputValues == "Valid" ? true : false))
-}
-
-function validateEmail (sEmail) {
   var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
-  return sEmail.toLowerCase().includes('uci') && filter.test(sEmail)
+  result = inputValues.toLowerCase().includes('uci') && filter.test(inputValues);
+  return (result == (outputValues == "Valid" ? true : false))
 }
